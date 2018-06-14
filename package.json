@@ -1,0 +1,25 @@
+{
+  "name": "botly-bot",
+  "version": "1.0.0",
+  "description": "a simple facebook bot made using botly",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pratiksinghchauhan/botly-bot.git"
+  },
+  "author": "pratiksinghchauhan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pratiksinghchauhan/botly-bot/issues"
+  },
+  "homepage": "https://github.com/pratiksinghchauhan/botly-bot#readme",
+  "dependencies": {
+    "botly": "^1.6.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3"
+  }
+}
