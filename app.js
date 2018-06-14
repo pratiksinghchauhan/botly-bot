@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 require('dotenv').config();
 
-const port = '3000';
+const port = '6000';
 
 const Botly = require("botly");
 const botly = new Botly({
@@ -277,6 +277,6 @@ app.use(function (err, req, res, next) {
 const server = http.createServer(app);
 
 server.listen(port,function(){
-    console.log("listening on 3000");
+    console.log("listening on 6000");
 });
 
