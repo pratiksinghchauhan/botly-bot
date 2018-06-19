@@ -26,7 +26,7 @@ botly.on('message', (sender, message, data) => {
     if (users[sender]) {
         if(data && data.text){
             var original_question= data.text.replace("/","");
-
+            console.log(data.text);
             unirest.get(process.env.FAQ_URL + "tenantID" + "/" + original_question).headers({
                 'Content-type': 'application/json'
             }).end(function (res) {
