@@ -20,6 +20,7 @@
   "dependencies": {
     "botly": "^1.6.1",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "unirest": "^0.5.1"
   }
 }
