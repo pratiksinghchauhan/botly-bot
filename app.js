@@ -40,7 +40,7 @@ botly.on('message', (sender, message, data) => {
                     console.log("Got responses from faw bot");
                     var answer2 = {};
                     var answer3 = {};
-                    answer1 = res.body.response_list[0];
+                    var answer1 = res.body.response_list[0];
                     if(res.body.response_list.length>1)answer2 = res.body.response_list[1];
                     if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
                     session.conversationData.answers = res.body.response_list;
