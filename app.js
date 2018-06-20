@@ -41,6 +41,7 @@ botly.on('message', (sender, message, data) => {
                     var answer2 = {};
                     var answer3 = {};
                     var answer1 = res.body.response_list[0];
+                    res = JSON.parse(res);
                     if(res.body.response_list.length>1)answer2 = res.body.response_list[1];
                     if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
                     console.log("confidenceeeeee-"+answer1.confidence);
