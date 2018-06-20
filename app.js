@@ -27,7 +27,7 @@ botly.on('message', (sender, message, data) => {
         if(data && data.text){
             var original_question= data.text.replace("/","");
 
-            unirest.get(process.env.FAQ_URL + "tenantID" + "/" + original_question).headers({
+            unirest.get(process.env.FAQ_URL + "5adeeb4ec3d41e2598606ece" + "/" + original_question).headers({
                 'Content-type': 'application/json'
             }).end(function (res) {
                 if (res.error) {
@@ -46,9 +46,8 @@ botly.on('message', (sender, message, data) => {
                     session.conversationData.answers = res.body.response_list;
                     console.log("confidenceeeeee-"+answer1.confidence);
                     if (answer1.confidence > 0.5) {
-                        var msg = sf.createHTMLMessage(session, answer1.answer);
-                        session.send(msg);
-
+                        botly.sendText({id:sender,text:answer1});
+                        console.log(answer1);
                     }
                 }
             });
