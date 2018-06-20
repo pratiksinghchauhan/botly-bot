@@ -44,7 +44,7 @@ botly.on('message', (sender, message, data) => {
                     if(res.body.response_list.length>1)answer2 = res.body.response_list[1];
                     if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
                     console.log("confidenceeeeee-"+answer1.confidence);
-                    if (answer1.confidence > 0.5) {
+                    if (answer1.confidence){//} > 0.5) {
                         botly.send({id:sender, message: {text:"hello world"}});
                         console.log(answer1);
                     }
