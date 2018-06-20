@@ -37,7 +37,7 @@ botly.on('message', (sender, message, data) => {
                     return 3;
                 }
                 else if(res.body.response_list && res.body.response_list.length > 0){
-                    console.log("Got responses from faw bot");
+                    console.log("Got responses from faq bot");
                     var answer2 = {};
                     var answer3 = {};
                     var answer1 = res.body.response_list[0];
@@ -45,7 +45,7 @@ botly.on('message', (sender, message, data) => {
                     if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
                     console.log("confidenceeeeee-"+answer1.confidence);
                     if (answer1.confidence > 0.5) {
-                        botly.sendText({id:sender,text:answer1});
+                        botly.sendText({id:sender,text:answer1.answer});
                         console.log(answer1);
                     }
                 }
