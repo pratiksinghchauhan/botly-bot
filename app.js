@@ -45,7 +45,7 @@ botly.on('message', (sender, message, data) => {
                     if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
                     console.log("confidenceeeeee-"+answer1.confidence);
                     if (answer1.confidence > 0.5) {
-                        botly.sendText({id:sender,text:answer1.answer});
+                        botly.send({id:sender, message: {text:answer1.answer}});
                         console.log(answer1);
                     }
                 }
