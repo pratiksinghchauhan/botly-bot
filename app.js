@@ -51,7 +51,7 @@ botly.on('message', (sender, message, data) => {
                 }
                 else{
                     console.log(res);
-                    botly.send("Something happened, we need to start over");
+                    botly.sendText("Something happened, we need to start over");
                 }
             });
         }
