@@ -36,9 +36,23 @@ botly.on('message', (sender, message, data) => {
                     botly.sendText({id:sender,text:"faq Server issue"});
                     return 3;
                 }
+                else if(res.body.response_list && res.body.response_list.length > 0){
+                    console.log("Got responses from faw bot");
+                    var answer2 = {};
+                    var answer3 = {};
+                    answer1 = res.body.response_list[0];
+                    if(res.body.response_list.length>1)answer2 = res.body.response_list[1];
+                    if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
+                    session.conversationData.answers = res.body.response_list;
+                    console.log("confidenceeeeee-"+answer1.confidence);
+                    if (answer1.confidence > 0.5) {
+                        var msg = sf.createHTMLMessage(session, answer1.answer);
+                        session.send(msg);
+
+                    }
+                }
             });
         }
-    }
     else {
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
