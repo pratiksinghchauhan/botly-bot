@@ -17,6 +17,11 @@ const botly = new Botly({
 });
 
 var app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+require("./helpers/getstarted")(app);
 
 var users = {};
 
