@@ -124,7 +124,7 @@ if (process.env.PAGE_ID) {
                             'payload':'ENGLISH_PAYLOAD'
                         },
                         {
-                            'title':'Contact Info',
+                            'title':'Arabic',
                             'type':'postback',
                             'payload':'ARABIC_PAYLOAD'
                         }
