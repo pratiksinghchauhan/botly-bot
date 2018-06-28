@@ -110,30 +110,30 @@ if (process.env.PAGE_ID) {
             'composer_input_disabled':false,
             'call_to_actions':[
                 {
-                    'title':'My Account',
+                    'title':'Languages',
                     'type':'nested',
                     'call_to_actions':[
                         {
-                            'title':'Pay Bill',
+                            'title':'Hindi',
                             'type':'postback',
-                            'payload':'PAYBILL_PAYLOAD'
+                            'payload':'HINDI_PAYLOAD'
                         },
                         {
-                            'title':'History',
+                            'title':'English',
                             'type':'postback',
-                            'payload':'HISTORY_PAYLOAD'
+                            'payload':'ENGLISH_PAYLOAD'
                         },
                         {
                             'title':'Contact Info',
                             'type':'postback',
-                            'payload':'CONTACT_INFO_PAYLOAD'
+                            'payload':'ARABIC_PAYLOAD'
                         }
                     ]
                 },
                 {
                     'type':'web_url',
-                    'title':'Latest News',
-                    'url':'http://petershats.parseapp.com/hat-news',
+                    'title':'Abbout Ellie',
+                    'url':'http://ellieva.com',
                     'webview_height_ratio':'full'
                 }
             ]
