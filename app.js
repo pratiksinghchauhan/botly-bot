@@ -98,9 +98,9 @@ botly.on('error', (ex) => {
 });
 
 if (process.env.PAGE_ID) {
-    botly.setGetStarted({pageId: process.env.PAGE_ID, payload: 'GET_STARTED_CLICKED'}, function (err, body) {
-        console.log('welcome cb:', err, body);
-    });
+    // botly.setGetStarted({pageId: process.env.PAGE_ID, payload: 'GET_STARTED_CLICKED'}, function (err, body) {
+    //     console.log('welcome cb:', err, body);
+    // });
     botly.setPersistentMenu({pageId: process.env.PAGE_ID, menu: [
         {
             'locale':'default',
