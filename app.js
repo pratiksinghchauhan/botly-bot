@@ -132,7 +132,7 @@ if (process.env.PAGE_ID) {
                 },
                 {
                     'type':'web_url',
-                    'title':'Abbout Ellie',
+                    'title':'About Ellie',
                     'url':'http://ellieva.com',
                     'webview_height_ratio':'full'
                 }
