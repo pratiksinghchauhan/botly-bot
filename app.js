@@ -17,6 +17,11 @@ const botly = new Botly({
 });
 
 var app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+require("./helpers/getstarted")(app);
 
 var users = {};
 
@@ -62,15 +67,18 @@ botly.on('message', (sender, message, data) => {
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
 
-            botly.sendText({id: sender, text: `${text} ${users[sender].first_name}`}, function (err, data) {
+            botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
                 console.log('send text cb:', err, data);
             });
         });
     }
 });
 
-botly.on('postback', (sender, message, postback) => {
+botly.on('postback', (sender, message, postback) => { 
     console.log('postback:', sender, message, postback);
+    botly.sendText({id: sender, text: `Hello, ${users[sender].first_name} , I am a friendly bot, designed to help Humans`}, function (err, data) {
+        console.log('send text cb:', err, data);
+    });
 });
 
 botly.on('delivery', (sender, message, mids) => {
