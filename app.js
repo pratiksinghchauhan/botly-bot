@@ -76,6 +76,9 @@ botly.on('message', (sender, message, data) => {
 
 botly.on('postback', (sender, message, postback) => { 
     console.log('postback:', sender, message, postback);
+    console.log("postback clicked");
+    console.log(postback.payload);
+    console.log(sender);
     if(postback.payload == "GET_STARTED_CLICKED"){
         botly.sendText({id : sender, text:"Hello Human!!"});
         console.log("Response of get user is sent");
