@@ -10,7 +10,7 @@ module.exports =  function(app){
         var messageData = {
                 "get_started":
                     {
-                            "payload":"hi"
+                            "payload":"GET_STARTED_CLICKED"
                     }
                 
             };
