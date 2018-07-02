@@ -36,20 +36,21 @@ botly.on('message', (sender, message, data) => {
             // botly.sendButtons({id: sender, text: 'What do you want to do next?', buttons: buttons}, function (err, data) {
             //     console.log('send buttons cb:', err, data);
             // });
-
-            let buttons = [];
-            buttons.push(botly.createWebURLButton("Go to Askrround", "http://askrround.com"));
-            buttons.push(botly.createPostbackButton("Continue", "continue"));
-            let element = {
-            title: "What do you want to do next?",
-            item_url: "http://example.com",
-            image_url: "http://example.com/image.png",
-            subtitle: "Choose now!",
-            buttons: buttons
+            if(data && data.text.toLowerCase() == "hi"){
+                let buttons = [];
+                buttons.push(botly.createWebURLButton("Go to Askrround", "https://theecsinc.com"));
+                buttons.push(botly.createPostbackButton("Continue", "continue"));
+                let element = {
+                title: "This is a bot for demonstration",
+                item_url: "http://example.com",
+                image_url: "http://example.com/image.png",
+                subtitle: "Register now!!",
+                buttons: buttons
+                }
+                botly.sendGeneric({id: sender, elements: element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.HORIZONTAL}, (err, data) => {
+                    console.log("send generic cb:", err, data);
+                });
             }
-            botly.sendGeneric({id: sender, elements: element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.HORIZONTAL}, (err, data) => {
-                console.log("send generic cb:", err, data);
-            });
         }
     }
     else {
@@ -72,9 +73,18 @@ botly.on('postback', (sender, message, postback) => {
     if(postback == "GET_STARTED_CLICKED"){
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
-
-            botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
-                console.log('sent response of postback to cb:', err, data);
+            let buttons = [];
+            buttons.push(botly.createWebURLButton("Go to Askrround", "http://askrround.com"));
+            buttons.push(botly.createPostbackButton("Continue", "continue"));
+            let element = {
+            title: "What do you want to do next?",
+            item_url: "http://example.com",
+            image_url: "http://example.com/image.png",
+            subtitle: "Choose now!",
+            buttons: buttons
+            }
+            botly.sendGeneric({id: sender, elements: element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.HORIZONTAL}, (err, data) => {
+                console.log("send generic cb:", err, data);
             });
         });
     }
