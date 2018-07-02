@@ -26,11 +26,13 @@ require("./helpers/getstarted")(app);
 var users = {};
 
 botly.on('message', (sender, message, data) => {
-    let text = `echo: ${data.text}`;
-
+    console.log(sender);
     if (users[sender]) {
         if(data && data.text){
             console.log("if");
+            botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
+                console.log('send text cb:', err, data);
+            });
         }
     }
     else {
@@ -52,6 +54,7 @@ botly.on('postback', (sender, message, postback) => {
     console.log(sender);
     if(postback == "GET_STARTED_CLICKED"){
         botly.sendText({id : sender, text:"Hello Human!!"});
+        users[sender] = sender;
         console.log("Response of get user is sent");
     }
     // botly.sendText({id: sender, text: `Hello, ${users[sender].first_name} , I am a friendly bot, designed to help Humans`}, function (err, data) {
