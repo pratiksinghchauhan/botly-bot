@@ -53,9 +53,13 @@ botly.on('postback', (sender, message, postback) => {
     console.log(postback);
     console.log(sender);
     if(postback == "GET_STARTED_CLICKED"){
-        botly.sendText({id : sender, text:"Hello Human!!"});
-        users[sender] = sender;
-        console.log("Response of get user is sent");
+        botly.getUserProfile(sender, function (err, info) {
+            users[sender] = info;
+
+            botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
+                console.log('sent response of postback to cb:', err, data);
+            });
+        });
     }
     // botly.sendText({id: sender, text: `Hello, ${users[sender].first_name} , I am a friendly bot, designed to help Humans`}, function (err, data) {
     //     console.log('send text cb:', err, data);
