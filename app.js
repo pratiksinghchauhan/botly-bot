@@ -30,40 +30,11 @@ botly.on('message', (sender, message, data) => {
 
     if (users[sender]) {
         if(data && data.text){
-            var original_question= data.text.replace("/","");
-            console.log(data.text);
-            unirest.get(process.env.FAQ_URL + "5adeeb4ec3d41e2598606ece" + "/" + original_question).headers({
-                'Content-type': 'application/json'
-            }).end(function (res) {
-                if (res.error) {
-                    console.log('GET error', res.error)
-                    console.log('Go to begin Dialog Cont');
-                    botly.sendText({id:sender,text:"faq Server issue"});
-                    return 3;
-                }
-                else if(res.body.response_list && res.body.response_list.length > 0){
-                    console.log("Got responses from faq bot");
-                    var answer2 = {};
-                    var answer3 = {};
-                    var answer1 = res.body.response_list[0];
-                  
-                    if(res.body.response_list.length>1)answer2 = res.body.response_list[1];
-                    if(res.body.response_list.length>2)answer3 = res.body.response_list[2];
-                    console.log("confidenceeeeee-"+answer1.confidence);
-                    if (answer1.confidence){//} > 0.5) {
-                        var ans =  answer1.answer.replace(/\r?\n|\r/g, " ");
-                        botly.send({id:sender, message: {text:ans}});
-                        console.log(answer1);
-                    }
-                }
-                else{
-                    console.log(res);
-                    botly.sendText("Something happened, we need to start over");
-                }
-            });
+            console.log("if");
         }
     }
     else {
+        console.log("else");
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
 
