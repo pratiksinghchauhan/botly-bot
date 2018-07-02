@@ -30,8 +30,11 @@ botly.on('message', (sender, message, data) => {
     if (users[sender]) {
         if(data && data.text){
             console.log("if");
-            botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
-                console.log('send text cb:', err, data);
+            let buttons = [];
+            buttons.push(botly.createWebURLButton('Go to Askrround', 'http://askrround.com'));
+            buttons.push(botly.createPostbackButton('Continue', 'continue'));
+            botly.sendButtons({id: sender, text: 'What do you want to do next?', buttons: buttons}, function (err, data) {
+                console.log('send buttons cb:', err, data);
             });
         }
     }
