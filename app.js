@@ -30,12 +30,26 @@ botly.on('message', (sender, message, data) => {
     if (users[sender]) {
         if(data && data.text){
             console.log("if");
+            // let buttons = [];
+            // buttons.push(botly.createWebURLButton('Go to Askrround', 'http://askrround.com'));
+            // buttons.push(botly.createPostbackButton('Continue', 'continue'));
+            // botly.sendButtons({id: sender, text: 'What do you want to do next?', buttons: buttons}, function (err, data) {
+            //     console.log('send buttons cb:', err, data);
+            // });
+
             let buttons = [];
-            buttons.push(botly.createWebURLButton('Go to Askrround', 'http://askrround.com'));
-            buttons.push(botly.createPostbackButton('Continue', 'continue'));
-            botly.sendButtons({id: sender, text: 'What do you want to do next?', buttons: buttons}, function (err, data) {
-                console.log('send buttons cb:', err, data);
-            });
+buttons.push(botly.createWebURLButton("Go to Askrround", "http://askrround.com"));
+buttons.push(botly.createPostbackButton("Continue", "continue"));
+let element = {
+  title: "What do you want to do next?",
+  item_url: "http://example.com",
+  image_url: "http://example.com/image.png",
+  subtitle: "Choose now!",
+  buttons: buttons
+}
+botly.sendGeneric({id: userId, elements: element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.HORIZONTAL}, (err, data) => {
+    console.log("send generic cb:", err, data);
+});
         }
     }
     else {
