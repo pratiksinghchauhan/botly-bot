@@ -10,7 +10,6 @@ require('dotenv').config();
 
 const port = '6000';
 
-var flow = ["showimage","purpose","What is your name?"]
 
 const Botly = require("botly");
 const botly = new Botly({
@@ -26,6 +25,7 @@ app.use(bodyParser.json());
 //require("./helpers/getstarted")(app);
 
 var users = {};
+
 
 function registrationflow(){
     
@@ -63,7 +63,6 @@ botly.on('message', (sender, message, data) => {
         console.log("else");
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
-            console.log(users);
             botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
                 console.log('send text cb:', err, data);
             });
@@ -78,8 +77,7 @@ botly.on('postback', (sender, message, postback) => {
     console.log(sender);
     if(postback == "GET_STARTED_CLICKED"){
         botly.getUserProfile(sender, function (err, info) {
-            users[sender].details = info;    
-            users[sender].questions = flow;
+            users[sender] = info;    
             let buttons = [];
             buttons.push(botly.createWebURLButton("Go to Website", "https://theecsinc.com"));
             buttons.push(botly.createPostbackButton("Register Here", "continue"));
@@ -97,8 +95,9 @@ botly.on('postback', (sender, message, postback) => {
     }
 
     if(postback == "continue"){
-        botly.sendText({id: sender, text: users[sender].questions[0]}, function (err, data) {
-                users[sender].questions.pop();
+        var flow = ["showimage","purpose","What is your name?"]
+        botly.sendText({id: sender, text: flow[0]}, function (err, data) {
+                flow.pop();
                 console.log('send text cb:', err, data);
         });
     }
