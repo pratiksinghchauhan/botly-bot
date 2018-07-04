@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const port = '6000';
 
-var flow = ["name","purpose","showimage"]
+var flow = ["showimage","purpose","What is your name?"]
 
 const Botly = require("botly");
 const botly = new Botly({
@@ -78,20 +78,28 @@ botly.on('postback', (sender, message, postback) => {
     console.log(sender);
     if(postback == "GET_STARTED_CLICKED"){
         botly.getUserProfile(sender, function (err, info) {
-            users[sender] = info;
+            users[sender].details = info;    
+            users[sender].questions = flow;
             let buttons = [];
-            buttons.push(botly.createWebURLButton("Go to Askrround", "http://askrround.com"));
-            buttons.push(botly.createPostbackButton("Continue", "continue"));
+            buttons.push(botly.createWebURLButton("Go to Website", "https://theecsinc.com"));
+            buttons.push(botly.createPostbackButton("Register Here", "continue"));
             let element = {
-            title: "What do you want to do next?",
-            item_url: "http://example.com",
-            image_url: "http://example.com/image.png",
-            subtitle: "Choose now!",
+            title: "This is a bot for demonstration",
+            item_url: "http://theecsinc.com",
+            image_url: "https://theecsinc.com/images/products/ellie.png",
+            subtitle: "Register now!!",
             buttons: buttons
             }
             botly.sendGeneric({id: sender, elements: element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.HORIZONTAL}, (err, data) => {
                 console.log("send generic cb:", err, data);
             });
+        });
+    }
+
+    if(postback == "continue"){
+        botly.sendText({id: sender, text: users[sender].questions[0]}, function (err, data) {
+                users[sender].questions.pop();
+                console.log('send text cb:', err, data);
         });
     }
     // botly.sendText({id: sender, text: `Hello, ${users[sender].first_name} , I am a friendly bot, designed to help Humans`}, function (err, data) {
