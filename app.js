@@ -58,15 +58,16 @@ botly.on('message', (sender, message, data) => {
                     console.log("send generic cb:", err, data);
                 });
             }
-            else if(data && data.text && flow[flow.length-1] == "purpose" ){
+            else if(flow && data && data.text && flow[flow.length-1] == "purpose" ){
                 botly.sendText({id: sender, text:'how you wanna use the bot question?', quick_replies: [botly.createQuickReply('personal', 'Commercial')]}, function (err, data) {
                     console.log('send generic cb:', err, data);
                     flow.pop();
                 });
             }
-            else if(data && data.text && flow[flow.length-1] == "showimage" ){
+            else if(flow && data && data.text && flow[flow.length-1] == "showimage" ){
                 botly.sendImage({id: sender, url:'https://upload.wikimedia.org/wikipedia/en/9/93/Tanooki_Mario.jpg'}, function (err, whatever) {
                     console.log(err);
+                    flow.pop();
                 });
             }
             else if (data && data.text && data.text.indexOf('list') !== -1) {
