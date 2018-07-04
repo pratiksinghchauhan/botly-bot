@@ -21,9 +21,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-require("./helpers/getstarted")(app);
+//require("./helpers/getstarted")(app);
 
 var users = {};
+
+function registrationflow(){
+    
+}
 
 botly.on('message', (sender, message, data) => {
     console.log(sender);
@@ -38,12 +42,12 @@ botly.on('message', (sender, message, data) => {
             // });
             if(data && data.text.toLowerCase() == "hi"){
                 let buttons = [];
-                buttons.push(botly.createWebURLButton("Go to Askrround", "https://theecsinc.com"));
-                buttons.push(botly.createPostbackButton("Continue", "continue"));
+                buttons.push(botly.createWebURLButton("Go to Website", "https://theecsinc.com"));
+                buttons.push(botly.createPostbackButton("Register Here", "continue"));
                 let element = {
                 title: "This is a bot for demonstration",
-                item_url: "http://example.com",
-                image_url: "http://example.com/image.png",
+                item_url: "http://theecsinc.com",
+                image_url: "https://theecsinc.com/images/products/ellie.png",
                 subtitle: "Register now!!",
                 buttons: buttons
                 }
@@ -106,9 +110,9 @@ botly.on('error', (ex) => {
 });
 
 if (process.env.PAGE_ID) {
-    // botly.setGetStarted({pageId: process.env.PAGE_ID, payload: 'GET_STARTED_CLICKED'}, function (err, body) {
-    //     console.log('welcome cb:', err, body);
-    // });
+     botly.setGetStarted({pageId: process.env.PAGE_ID, payload: 'GET_STARTED_CLICKED'}, function (err, body) {
+         console.log('welcome cb:', err, body);
+     });
     botly.setPersistentMenu({pageId: process.env.PAGE_ID, menu: [
         {
             'locale':'default',
