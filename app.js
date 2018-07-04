@@ -10,6 +10,8 @@ require('dotenv').config();
 
 const port = '6000';
 
+var flow = ["name","purpose","showimage"]
+
 const Botly = require("botly");
 const botly = new Botly({
     verifyToken: 'thisisatestchatbot',
@@ -61,7 +63,7 @@ botly.on('message', (sender, message, data) => {
         console.log("else");
         botly.getUserProfile(sender, function (err, info) {
             users[sender] = info;
-
+            console.log(users);
             botly.sendText({id: sender, text: `Hello ${users[sender].first_name}`}, function (err, data) {
                 console.log('send text cb:', err, data);
             });
