@@ -6,6 +6,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const http = require('http');
 var unirest = require('unirest');
+var flow;
 require('dotenv').config();
 
 const port = '6000';
@@ -57,6 +58,119 @@ botly.on('message', (sender, message, data) => {
                     console.log("send generic cb:", err, data);
                 });
             }
+            else if(data && data.text && flow[flow.length-1] == "purpose" ){
+                botly.sendText({id: sender, text:'how you wanna use the bot question?', quick_replies: [botly.createQuickReply('personal', 'Commercial')]}, function (err, data) {
+                    console.log('send generic cb:', err, data);
+                    flow.pop();
+                });
+            }
+            else if(data && data.text && flow[flow.length-1] == "showimage" ){
+                botly.sendImage({id: sender, url:'https://upload.wikimedia.org/wikipedia/en/9/93/Tanooki_Mario.jpg'}, function (err, whatever) {
+                    console.log(err);
+                });
+            }
+            else if (data && data.text && data.text.indexOf('list') !== -1) {
+                let element = botly.createListElement({
+                    title: 'Classic T-Shirt Collection',
+                    image_url: 'https://peterssendreceiveapp.ngrok.io/img/collection.png',
+                    subtitle: 'See all our colors',
+                    buttons: [
+                        {title: 'DO WORK', payload: 'DO_WORK'},
+                    ],
+                    default_action: {
+                        'url': 'https://peterssendreceiveapp.ngrok.io/shop_collection',
+                    }
+                });
+                let element2 = botly.createListElement({
+                    title: 'Number 2',
+                    image_url: 'https://peterssendreceiveapp.ngrok.io/img/collection.png',
+                    subtitle: 'See all our colors',
+                    buttons: [
+                        {title: 'Go to Askrround', url: 'http://askrround.com'},
+                    ],
+                    default_action: {
+                        'url': 'https://peterssendreceiveapp.ngrok.io/shop_collection',
+                    }
+                });
+                botly.sendList({id: sender, elements: [element, element2], buttons: botly.createPostbackButton('Continue', 'continue'), top_element_style: Botly.CONST.TOP_ELEMENT_STYLE.LARGE},function (err, data) {
+                    console.log('send list cb:', err, data);
+                });
+            }
+            else if (data && data.text && data.text.indexOf('quick') !== -1) {
+                botly.sendText({id: sender, text:'some question?', quick_replies: [botly.createQuickReply('option1', 'option_1')]}, function (err, data) {
+                    console.log('send generic cb:', err, data);
+                });
+            }
+            else if (data && data.text && data.text.indexOf('generic') !== -1) {
+                let buttons = [];
+                buttons.push(botly.createWebURLButton('Go to Askrround', 'http://askrround.com'));
+                buttons.push(botly.createPostbackButton('Continue', 'continue'));
+                let element = {
+                    title: 'What do you want to do next?',
+                    item_url: 'https://upload.wikimedia.org/wikipedia/en/9/93/Tanooki_Mario.jpg',
+                    image_url: 'https://upload.wikimedia.org/wikipedia/en/9/93/Tanooki_Mario.jpg',
+                    subtitle: 'Choose now!',
+                    buttons: [botly.createWebURLButton('Go to Askrround', 'http://askrround.com')]
+                };
+                botly.sendGeneric({id: sender, elements:element, aspectRatio: Botly.CONST.IMAGE_ASPECT_RATIO.SQUARE}, function (err, data) {
+                    console.log('send generic cb:', err, data);
+                });
+            }
+            else if (data && data.text && data.text.indexOf('receipt') !== -1) {
+                let payload = {
+                    'recipient_name': 'Stephane Crozatier',
+                    'order_number': '12345678902',
+                    'currency': 'USD',
+                    'payment_method': 'Visa 2345',
+                    'order_url': 'http://petersapparel.parseapp.com/order?order_id=123456',
+                    'timestamp': '1428444852',
+                    'elements': [
+                        {
+                            'title': 'Classic White T-Shirt',
+                            'subtitle': '100% Soft and Luxurious Cotton',
+                            'quantity': 2,
+                            'price': 50,
+                            'currency': 'USD',
+                            'image_url': 'http://petersapparel.parseapp.com/img/whiteshirt.png'
+                        },
+                        {
+                            'title': 'Classic Gray T-Shirt',
+                            'subtitle': '100% Soft and Luxurious Cotton',
+                            'quantity': 1,
+                            'price': 25,
+                            'currency': 'USD',
+                            'image_url': 'http://petersapparel.parseapp.com/img/grayshirt.png'
+                        }
+                    ],
+                    'address': {
+                        'street_1': '1 Hacker Way',
+                        'street_2': '',
+                        'city': 'Menlo Park',
+                        'postal_code': '94025',
+                        'state': 'CA',
+                        'country': 'US'
+                    },
+                    'summary': {
+                        'subtotal': 75.00,
+                        'shipping_cost': 4.95,
+                        'total_tax': 6.19,
+                        'total_cost': 56.14
+                    },
+                    'adjustments': [
+                        {
+                            'name': 'New Customer Discount',
+                            'amount': 20
+                        },
+                        {
+                            'name': '$10 Off Coupon',
+                            'amount': 10
+                        }
+                    ]
+                };
+                botly.sendReceipt({id: sender, payload: payload}, function (err, data) {
+                    console.log('send generic cb:', err, data);
+                });
+            }
         }
     }
     else {
@@ -95,8 +209,8 @@ botly.on('postback', (sender, message, postback) => {
     }
 
     if(postback == "continue"){
-        var flow = ["showimage","purpose","What is your name?"]
-        botly.sendText({id: sender, text: flow[0]}, function (err, data) {
+        flow = ["showimage","purpose","What is your name?"]
+        botly.sendText({id: sender, text: flow[flow.length-1]}, function (err, data) {
                 flow.pop();
                 console.log('send text cb:', err, data);
         });
